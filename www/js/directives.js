@@ -1,0 +1,4 @@
+NyvangApp.directive('blankDirective', [function(){
+
+}]);
+

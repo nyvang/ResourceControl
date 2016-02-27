@@ -1,0 +1,118 @@
+NyvangApp.factory('dataFactory', ['$window', function(win){
+	this.update = function() {
+		return function() {
+	    	db.transaction(populateDB, errorCB, successCB);
+
+			var results = "";
+			 // Insert testdata
+		    function populateDB(tx) {
+		        tx.executeSql('CREATE TABLE IF NOT EXISTS electricity (id integer primary key, monthNo integer, consumed integer, price integer)');
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [1, 10, 50]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [2, 12, 60]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [3, 11, 55]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [4, 9, 45]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [5, 8, 40]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [6, 7, 35]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [7, 7, 35]);
+		        tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [8, 6, 30]);
+		        queryDB(tx);
+		    }
+		    // form the query
+		    function queryDB(tx) {
+		        tx.executeSql("SELECT id, monthNo, consumed, price from electricity;", [], 	, errorCB);
+		    }
+		    // Display the results
+		    function querySuccess(tx) {
+		        var len = results.rows.length;
+		        alert("results.rows.length: " + results.rows.length + " [should be 8]"); 
+		        for (var i = 0; i < len; i++) { // loop as many times as there are row results
+		            results =
+		                "<table><tr><td>ID = " + results.rows.item(i).id + 
+		                "</td><td>Month = " + results.rows.item(i).monthNo + 
+		                "</td><td>El spendt = " + results.rows.item(i).consumed + 
+		                "</td><td>Price = " + results.rows.item(i).price + "</td></tr></table>";
+		        } 
+		    }
+		    // Transaction error callback
+		    function errorCB(err) {
+		        console.log("Error processing SQL: " + err.code);
+		        //reject("Error processing SQL: " + err.code);
+		    }
+		    // Success error callback
+		    function successCB() {
+		    }
+
+		    return results;
+		};
+
+	}
+}]);
+/*
+.service('SQLService', ['$q',function($q){
+	this.update = function() {
+        return $q(function() {
+
+		    var promises = [];
+
+		    // Prepare handling of promises
+	        var resolveDefer = function resolveFn(tx, res) {
+	            var deferedElm = $q.defer();
+	            deferedElm.resolve(res.rows.item(0));
+	            promises.push(deferedElm.promise);
+	        }
+	        var rejectDefer = function resolveFn(tx, err) {
+	            var deferedElm = $q.defer();
+	            deferedElm.reject(err);
+	            promises.push(deferedElm.promise);
+	        }
+
+	        // Insert testdata
+	        function populateDB(tx) {
+	            tx.executeSql('CREATE TABLE IF NOT EXISTS electricity (id integer primary key, monthNo integer, consumed integer, price integer)');
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [1, 10, 50]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [2, 12, 60]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [3, 11, 55]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [4, 9, 45);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [5, 8, 40]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [6, 7, 35]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [7, 7, 35]);
+	            tx.executeSql('INSERT INTO electricity (monthNo, consumed, price) VALUES (?,?,?)', [8, 6, 30]);
+	            queryDB(tx);
+	        }
+	        // form the query
+	        function queryDB(tx) {
+	            tx.executeSql("SELECT id, monthNo, consumed, price from electricity;", [], querySuccess, errorCB);
+	        }
+	        // Display the results
+	        function querySuccess(tx, results) {
+	            var len = results.rows.length;
+	            alert("results.rows.length: " + results.rows.length + " [should be 8]"); 
+	            for (var i = 0; i < len; i++) { // loop as many times as there are row results
+	                $scope.data =
+	                    "<table><tr><td>ID = " + results.rows.item(i).id + 
+	                    "</td><td>Month = " + results.rows.item(i).monthNo + 
+	                    "</td><td>El spendt = " + results.rows.item(i).consumed + 
+	                    "</td><td>Price = " + results.rows.item(i).price + "</td></tr></table>";
+	            } 
+	        }
+	        // Transaction error callback
+	        function errorCB(err) {
+	            console.log("Error processing SQL: " + err.code);
+	            //reject("Error processing SQL: " + err.code);
+	        }
+	        // Success error callback
+	        function successCB() {
+	        }
+			
+	        $q.all(promises).then(function(res) {
+	        	resolve(res);
+	        }, function(err) {
+	        	reject(err);
+	        });
+
+	    });
+     }
+
+}]);
+
+*/
