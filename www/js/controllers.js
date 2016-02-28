@@ -11,12 +11,25 @@ NyvangApp.controller('page2Ctrl', function($scope) {
 
 })
    
-.controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', 
-      function($scope, $ionicModal, $ionicLoading, dataService) {
-      $ionicModal.fromTemplateUrl('electricity-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-      }).then(function(modal) {
+.controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', '$window',
+      function($scope, $ionicModal, $ionicLoading, dataService, $win) {
+
+      $scope.electrityForm = {};
+      $scope.electrityForm.month = "";
+      $scope.electrityForm.kwh = "";
+      $scope.electrityForm.price = "";
+      $scope.electrityForm.modalTitle = "Add new entry";
+
+      var modalOptions = {
+           scope: $scope,
+            animation: 'slide-in-up',
+            focusFirstInput: true,
+            backdropClickToClose: true,
+            hardwareBackButtonClose: true
+      }
+
+      $ionicModal.fromTemplateUrl('electricity-modal.html', modalOptions)
+      .then(function(modal) {
             $scope.modal = modal;
       });
       $scope.openModal = function() {
@@ -31,19 +44,10 @@ NyvangApp.controller('page2Ctrl', function($scope) {
       });
       // Execute action on hide modal
       $scope.$on('modal.hidden', function() {
-            // Execute action
-      });
-      // Execute action on remove modal
-      $scope.$on('modal.removed', function() {
-            // Execute action
+            //$scope.modal.remove();
       });
 
-
-      $scope.electrityForm = {};
-      $scope.electrityForm.month = "";
-      $scope.electrityForm.kwh = "";
-      $scope.electrityForm.price = "";
-
+      
       $scope.electrityForm.submit = function(item, event) {
             $ionicLoading.show({template: 'Saving...'});
             console.log("form submitted");
@@ -55,22 +59,33 @@ NyvangApp.controller('page2Ctrl', function($scope) {
             var m = new Date($scope.electrityForm.month).getMonth();
 
            // storageE.setItem(m, data)
-          
+          $win.setTimeout(function(){
             dataService.set(m, data);
+            
+            if(dataService.get(m)){
+                  console.log("saved!")
+                  $scope.electrityForm.reset();
+            }
+            $ionicLoading.hide();
+
+          }, 500);
           
             //DataService.data.set('username': 'ifedi', 'fullname': { firstname: 'Ifedi', lastname: 'Okonkwo'});
             //data.set(m, 'Electricity': { use: $scope.electrityForm.kwh, price: $scope.electrityForm.price });
-            // storageE.setItem(m, $scope.electrityForm.kwh)
-            if(dataService.get(m)){
-                  console.log("saved!")
-                  $scope.electrityForm.clear();
-            }
-            $ionicLoading.hide();
+            // storageE.setItem(m, $scope.electrityForm.kwh) 
       }
 
+      $scope.electrityForm.reset = function() {
+            $scope.electrityForm.month = "";
+            $scope.electrityForm.kwh = "";
+            $scope.electrityForm.price = "";
+      }
 
-
-
+      $scope.electrityForm.close = function() {
+             if($scope.modal.isShown()) {
+                  $scope.closeModal();
+            }
+      }
 
 }])
    

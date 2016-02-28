@@ -34,13 +34,16 @@
       <script id="electricity-modal.html" type="text/ng-template">
           <ion-modal-view>
             <ion-header-bar>
-              <h1 class="title">Add new entry</h1>
+              <div class="bar bar-header">
+                  <button class="button icon ion-ios-arrow-back"> Back </button>
+                  <div class="h1 title" ng-model="electrityForm.modalTitle">{{modalTitle}}</div>
+                  <button ng-click="electrityForm.close()" class="button button-assertive icon ion-close-circled"></button>
+              </div>
             </ion-header-bar>
             <ion-content>
-              <div style="" class="list card">
-                    
+              <div class="list card">
                     <div class="item item-body">
-                        <form ng-submit="electrityForm.submit()" style="" class="list">
+                        <form ng-submit="electrityForm.submit()" style="" class="pristine">
 
                             <label class="item item-input">
                               <span class="input-label">Month</span>
@@ -56,8 +59,10 @@
                               <span class="input-label">Price</span>
                               <input type="double" id="price" ng-model="electrityForm.price" required>
                             </label>
-
-                            <input type="submit" class="button button-block button-outline button-positive" value="Save">
+                          <div class="button-bar">
+                            <input type="submit" class="button button-outline button-positive" value="Save">
+                            <input type="button" ng-click="electrityForm.reset()" class="button button-outline button-energized" value="Reset">
+                          </div>
                         </form>
                     </div>
                 </div>
