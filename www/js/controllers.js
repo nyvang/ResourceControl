@@ -11,7 +11,8 @@ NyvangApp.controller('page2Ctrl', function($scope) {
 
 })
    
-.controller('addEntryCtrl', function($scope, $ionicModal, $ionicLoading) {
+.controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', 
+      function($scope, $ionicModal, $ionicLoading, dataService) {
       $ionicModal.fromTemplateUrl('electricity-modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -41,25 +42,37 @@ NyvangApp.controller('page2Ctrl', function($scope) {
       $scope.electrityForm = {};
       $scope.electrityForm.month = "";
       $scope.electrityForm.kwh = "";
+      $scope.electrityForm.price = "";
 
       $scope.electrityForm.submit = function(item, event) {
-            $ionicLoading.show({template: 'Saving...'})
+            $ionicLoading.show({template: 'Saving...'});
             console.log("form submitted");
-          /*  var data = {
+            var data = {
                   use: $scope.electrityForm.kwh,
                   price: $scope.electrityForm.price
             }
-            storageE.setItem($scope.electrityForm.month, data)
-          */
+
             var m = new Date($scope.electrityForm.month).getMonth();
-            storageE.setItem(m, $scope.electrityForm.kwh)
-            if(storageE.getItem(m)) {
-                  console.log("saved");
+
+           // storageE.setItem(m, data)
+          
+            dataService.set(m, data);
+          
+            //DataService.data.set('username': 'ifedi', 'fullname': { firstname: 'Ifedi', lastname: 'Okonkwo'});
+            //data.set(m, 'Electricity': { use: $scope.electrityForm.kwh, price: $scope.electrityForm.price });
+            // storageE.setItem(m, $scope.electrityForm.kwh)
+            if(dataService.get(m)){
+                  console.log("saved!")
+                  $scope.electrityForm.clear();
             }
             $ionicLoading.hide();
       }
 
-})
+
+
+
+
+}])
    
 .controller('aboutCtrl', function($scope) {
 
