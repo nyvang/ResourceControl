@@ -1,32 +1,40 @@
-<ion-view style="" title="Totals">
+<ion-view ng-controller="totalsCtrl" style="" title="Totals" title="Statistics">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-		        
+        
         <div class="row">
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
+          <div class="button-bar positive">
+            <a class="item active item-icon-left">Electricity
+                <i class="icon ion-flash"></i>
+            </a>
+            <a class="item item-icon-left">Water
+                <i class="icon ion-waterdrop"></i>
+            </a>
+            <a class="item item-icon-left">Heat
+                <i class="icon ion-android-sunny"></i>
+            </a>
+          </div>
         </div>
 
         <div class="row">
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
+          <div class="col">
+                <div id="chart_electicity" style="width: {{ chartWidth }}px; height: {{ chartHeight }}px;"></div>
+          </div>
         </div>
 
         <div class="row">
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-        </div>
+          <div class="item card">
+            <div class="item item-body">
+              The chart visualizes the comparison of the resources spend over a timespan of 3 years. 
+              Click above to change the data of the chart, and click below to see the expences used on these resources - should you dear...
+            </div>
+          </div>
+        </div> 
 
-        <div class="row">
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-          <div class="col">.col</div>
-        </div>        
+        <div style="margin-bottom:50px" class="row">
+          <button  class="button button-positive button-block button-outline ">
+          <i class="icon ion-cash"></i>
+            </button>
+        </div>       
 
     </ion-content>
 </ion-view>

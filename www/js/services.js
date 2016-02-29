@@ -25,6 +25,40 @@ NyvangApp.factory('dataService', [function(){
 
 }])
 
+.factory('deviceInfo', [function() {
+	var width, height;
+	var deviceDiscovery = {
+
+		width: function() {
+			if (typeof (window.innerWidth) == 'number') {
+			    windowWidth = window.innerWidth;
+			      
+			} else if (document.documentElement && document.documentElement.clientWidth) {
+			    windowHeight = document.documentElement.clientHeight;
+			    windowWidth = document.documentElement.clientWidth;
+			     
+			} else if (document.body && document.body.clientWidth) {
+			   windowWidth = document.body.clientWidth;
+			}
+			return windowWidth;
+		},
+		height: function() {
+			if (typeof (window.innerWidth) == 'number') {
+			    windowHeight = window.innerHeight;
+			      
+			} else if (document.documentElement && document.documentElement.clientHeight) {
+			    windowHeight = document.documentElement.clientHeight;
+			     
+			} else if (document.body && document.body.clientHeight) {
+			   windowHeight = document.body.clientHeight;
+			}
+			return windowHeight;
+		}
+
+	}
+	return deviceDiscovery;
+}])
+
 .service('coolService', [function(){
 /*
 	this.set = function(key, value) {
