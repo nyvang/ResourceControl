@@ -13,7 +13,6 @@ NyvangApp.controller('page2Ctrl', function($scope) {
         $scope.chartWidth = (deviceInfo.width() - (deviceInfo.width() * 0.1));
         $scope.chartHeight = deviceInfo.width();
 
-
         /*
          * **** TEMP FIX FOR A BAD RELEASE OF GOOGLE VISUALIZATION VERSION 44 ****
          * Fix: Instead of loading 'current' version, v.43 is loaded
@@ -25,44 +24,37 @@ NyvangApp.controller('page2Ctrl', function($scope) {
         google.charts.setOnLoadCallback(drawVisualization);
 
         function drawVisualization() {
-            console.log("drawVisualization")
-            // Some raw data (not necessarily accurate)
-            var data = google.visualization.arrayToDataTable([
-                ['Month',   '2014',   '2015',   '2016'],
-                ['Januar',  165,      170,      160],
-                ['Februar', 135,      151,      145],
-                ['Marts',   157,      161,      159],
-                ['April',   139,      141,      143],
-                ['May',     165,      150,      157],
-                ['June',    135,      129,      133],
-                ['July',    132,      122,      127],
-                ['August',  139,      135,      139],
-                ['Septmber',136,      139,      140],
-                ['Oktober', 165,      159,      155],
-                ['November',166,      168,      159],
-                ['December',169,      171,      170]
-            ]);
 
-            var options = {
-                title : 'Electricity 2014 - 2016',
-                vAxis: {title: 'KW/h'},
-                hAxis: {title: 'Month'},
-                seriesType: 'bars',
-                series: {5: {type: 'line'}}
+            var headersArray = ['Month, Year','Kw/h','Price'];
+            var dataArray = [];
+            dataArray.push(headersArray);
+
+            for (var key in localStorage){
+               dataArray.push(JSON.parse(localStorage.getItem(key)));
+            }
+            dataArray.shift(); 
+
+            var data = google.visualization.arrayToDataTable(dataArray);
+            c(dataArray[1][0] + " - " + dataArray[dataArray.length-1][0]);
+
+            var o = {
+                title : dataArray[1][0] + " - " + dataArray[dataArray.length-1][0],
+                vAxis: {title: dataArray[0][1]},
+                hAxis: {title: dataArray[0][0]},
+                seriesType: 'line',
+                series: {3: {type: 'line'}}
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart_electicity'));
-            chart.draw(data, options);
+            chart.draw(data, o);
         }
-   
-
 }])
    
-.controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', '$window',
-    function($scope, $ionicModal, $ionicLoading, dataService, $win) {
+.controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', '$window', 'dateService',
+    function($scope, $ionicModal, $ionicLoading, dataService, $win, dateService) {
 
     $scope.electrityForm = {};
-    $scope.electrityForm.month = "";
+    $scope.electrityForm.month = new Date();
     $scope.electrityForm.kwh = "";
     $scope.electrityForm.price = "";
     $scope.electrityForm.modalTitle = "Add new entry";
@@ -77,26 +69,33 @@ NyvangApp.controller('page2Ctrl', function($scope) {
 
     const FAKE_SAVE_DELAY = 500;
 
-
-    /* Form
-     ----------------------------------*/
-
+    /*
+        FORM SUBMIT BUTTON
+    */
     $scope.electrityForm.submit = function(item, event) {
         $ionicLoading.show({template: 'Saving...'});
-        //------------------------------------------------- log //
-        console.log("form submitted");
-        var data = {
-              use: $scope.electrityForm.kwh,
-              price: $scope.electrityForm.price
-        }
 
-        var m = new Date($scope.electrityForm.month).getMonth();
+        // Prepare data to be visualized in the charts    
+        var kwhFormatted = $scope.electrityForm.kwh.replace(',', '.');
+        var priceFormatted = $scope.electrityForm.price.replace(',', '.').replace('"', '');
 
-        // storageE.setItem(m, data)
+        var mSortable = new Date($scope.electrityForm.month).getMonth();
+        var mString = dateService.toMonthString(mSortable);
+        mString += ", " + new Date($scope.electrityForm.month).getFullYear()
+        mSortable += ", " + new Date($scope.electrityForm.month).getFullYear()
+
+        var data = [
+              mString,  
+              new Number(kwhFormatted),
+              new Number( priceFormatted)
+        ]
+        // Data prepared
+
+        // Save the data. Currently to LocalStorage
         $win.setTimeout(function(){
-            dataService.set(m, data);
-        
-            if(dataService.get(m)){
+            dataService.set(mSortable, data);
+            
+            if(dataService.get(mSortable)){
                   //------------------------------------------ log //
                   console.log("saved!")
                   $scope.electrityForm.reset();
@@ -105,21 +104,28 @@ NyvangApp.controller('page2Ctrl', function($scope) {
         }, FAKE_SAVE_DELAY);
     }
 
+    /*
+        FORM RESET BUTTON
+    */
     $scope.electrityForm.reset = function() {
-        $scope.electrityForm.month = "";
+        $scope.electrityForm.month = new Date();
         $scope.electrityForm.kwh = "";
         $scope.electrityForm.price = "";
     }
 
+
+    /*
+        MODAL CLOSE BUTTON
+    */
     $scope.electrityForm.close = function() {
         if($scope.modal.isShown()) {
             $scope.closeModal();
         }
     }
 
-    /* Modal
-     ----------------------------------*/
-
+    /*
+        MODAL EVENTS
+    */
     $ionicModal.fromTemplateUrl('electricity-modal.html', modalOptions)
     .then(function(modal) {
         $scope.modal = modal;

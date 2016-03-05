@@ -14,9 +14,9 @@ NyvangApp.factory('dataService', [function(){
 		    if (!value) {return;}
 
 		    // assume it is an object that has been stringified
-		    if (value[0] === "{") {
+		 /*   if (value[0] === "{") {
 		        value = JSON.parse(value);
-		    }
+		    }*/
 
 		    return value;
 		}
@@ -25,6 +25,11 @@ NyvangApp.factory('dataService', [function(){
 
 }])
 
+/*
+  DeviceInfo finds the width and height of the current device.
+  Use deviceInfo.width or deviceInfo.height
+  @ return: number (in px)
+*/
 .factory('deviceInfo', [function() {
 	var width, height;
 	var deviceDiscovery = {
@@ -59,53 +64,54 @@ NyvangApp.factory('dataService', [function(){
 	return deviceDiscovery;
 }])
 
-.service('coolService', [function(){
+
 /*
-	this.set = function(key, value) {
-	    if (!key || !value) {return;}
-
-	    if (typeof value === "object") {
-	      value = JSON.stringify(value);
-	    }
-	    localStorage.setItem(key, value);
-	}
-
-	this.get = function(key) {
-	    var value = localStorage.getItem(key);
-	    if (!value) {return;}
-
-	    // check if the object has been stringified
-	    if (value[0] === "{") {
-	      value = JSON.parse(value);
-	    }
-	    return value;
-	}
+  DateService "convert" a month number into its string representation.
+  @ param: number (from 0-11)
+  @ return: MonthString i.e. January, February etc.
 */
+.service('dateService', [function(){
+	this.toMonthString = function(monthNo) {
+		var monthString = "";
+
+		switch (monthNo) {
+			case 0:
+				monthString = 'January';
+				break;
+			case 1:
+				monthString = 'Februar';
+				break;
+			case 2:
+				monthString = 'Marts';
+				break;
+			case 3:
+				monthString = 'April';
+				break;
+			case 4:
+				monthString = 'May';
+				break;
+			case 5:
+				monthString = 'June';
+				break;
+			case 6:
+				monthString = 'July';
+				break;
+			case 7:
+				monthString = 'August';
+				break;
+			case 8:
+				monthString = 'Septmber';
+				break;
+			case 9:
+				monthString = 'Oktober';
+				break;
+			case 10:
+				monthString = 'November';
+				break;
+			case 11:
+				monthString = 'December';
+				break;
+		}
+		return monthString;
+	}
 }]);
-
-
-/*
-
-var data = {
-  set: function(key, value) {
-    if (!key || !value) {return;}
-
-    if (typeof value === "object") {
-      value = JSON.stringify(value);
-    }
-    localStorage.setItem(key, value);
-  },
-  get: function(key) {
-    var value = localStorage.getItem(key);
-
-    if (!value) {return;}
-
-    // assume it is an object that has been stringified
-    if (value[0] === "{") {
-      value = JSON.parse(value);
-    }
-
-    return value;
-  }
-}
-*/

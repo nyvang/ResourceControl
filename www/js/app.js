@@ -4,6 +4,11 @@
 // var db = null;
 var storageE;
 
+function c(l) {
+  console.log(l);
+}
+
+
 // var nicolajsapp = angular.module('app', ['ionic']).run(function($ionicPlatform) {
 var NyvangApp = angular.module('app', ['ionic'])
     .run(function($ionicPlatform) {
