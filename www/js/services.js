@@ -64,6 +64,9 @@ NyvangApp.factory('dataService', [function(){
 	return deviceDiscovery;
 }])
 
+.factory('logFileService', [function(){
+
+}])
 
 /*
   DateService "convert" a month number into its string representation.
@@ -103,7 +106,7 @@ NyvangApp.factory('dataService', [function(){
 				monthString = 'Septmber';
 				break;
 			case 9:
-				monthString = 'Oktober';
+				monthString = 'October';
 				break;
 			case 10:
 				monthString = 'November';

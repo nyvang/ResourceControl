@@ -5,7 +5,7 @@
 var storageE;
 
 function c(l) {
-  console.log(l);
+  console.log();
 }
 
 

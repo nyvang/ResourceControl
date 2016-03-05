@@ -13,6 +13,8 @@ NyvangApp.controller('page2Ctrl', function($scope) {
         $scope.chartWidth = (deviceInfo.width() - (deviceInfo.width() * 0.1));
         $scope.chartHeight = deviceInfo.width();
 
+        $scope.electricButton = strings.buttons.en.electricity.toString();
+
         /*
          * **** TEMP FIX FOR A BAD RELEASE OF GOOGLE VISUALIZATION VERSION 44 ****
          * Fix: Instead of loading 'current' version, v.43 is loaded
@@ -87,7 +89,7 @@ NyvangApp.controller('page2Ctrl', function($scope) {
         var data = [
               mString,  
               new Number(kwhFormatted),
-              new Number( priceFormatted)
+              new Number(priceFormatted)
         ]
         // Data prepared
 
@@ -96,7 +98,7 @@ NyvangApp.controller('page2Ctrl', function($scope) {
             dataService.set(mSortable, data);
             
             if(dataService.get(mSortable)){
-                  //------------------------------------------ log //
+
                   console.log("saved!")
                   $scope.electrityForm.reset();
             }
