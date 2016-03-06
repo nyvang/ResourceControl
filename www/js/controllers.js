@@ -1,15 +1,29 @@
 // nicolajsapp.controller('loginCtrl', function($scope) {
-NyvangApp.controller('page2Ctrl', function($scope) {
-
+NyvangApp.controller('page2Ctrl', function($scope, $state) {
+    var user = Ionic.User.current();
+    if (!user.isAuthenticated()) {
+        $state.go('login');
+    }
 })
       
-.controller('statisticsThisMonthCtrl', function($scope) {
-   
+.controller('statisticsThisMonthCtrl', function ($scope, $state) {
+    var user = Ionic.User.current();
+    if (!user.isAuthenticated()) {
+        $state.go('login');
+    }
 })
    
 .controller('totalsCtrl', [ '$scope', 'dataService', '$window', 'deviceInfo',
-    function($scope, dataService, $win, deviceInfo) {
+    function($scope, dataService, $win, deviceInfo, $state) {
         
+
+        (function ($state) {
+            var user = Ionic.User.current();
+            if (!user.isAuthenticated()) {
+                $state.go('login');
+            }
+        })();
+
         $scope.chartWidth = (deviceInfo.width() - (deviceInfo.width() * 0.1));
         $scope.chartHeight = deviceInfo.width();
 
@@ -31,8 +45,10 @@ NyvangApp.controller('page2Ctrl', function($scope) {
             var dataArray = [];
             dataArray.push(headersArray);
 
-            for (var key in localStorage){
-               dataArray.push(JSON.parse(localStorage.getItem(key)));
+            for (var key in localStorage) {
+                if(key.endsWith("2016")) {
+                    dataArray.push(JSON.parse(localStorage.getItem(key)));
+                }
             }
             dataArray.shift(); 
 
@@ -53,7 +69,12 @@ NyvangApp.controller('page2Ctrl', function($scope) {
 }])
    
 .controller('addEntryCtrl', ['$scope', '$ionicModal', '$ionicLoading', 'dataService', '$window', 'dateService',
-    function($scope, $ionicModal, $ionicLoading, dataService, $win, dateService) {
+    function ($scope, $ionicModal, $ionicLoading, dataService, $win, dateService, $state) {
+
+    var user = Ionic.User.current();
+    if (!user.isAuthenticated()) {
+        $state.go('login');
+    }
 
     $scope.electrityForm = {};
     $scope.electrityForm.month = new Date();
@@ -146,11 +167,17 @@ NyvangApp.controller('page2Ctrl', function($scope) {
     // end addEntry Controller
 }]) 
    
-.controller('aboutCtrl', function($scope) {
-
+.controller('aboutCtrl', function ($scope, $state) {
+    var user = Ionic.User.current();
+    if (!user.isAuthenticated()) {
+        $state.go('login');
+    }
 })
 
-.controller('mainCtrl', function($scope) {
-
+.controller('mainCtrl', function ($scope, $state) {
+    var user = Ionic.User.current();
+    if (!user.isAuthenticated()) {
+        $state.go('login');
+    }
 });
  

@@ -1,0 +1,43 @@
+<ion-view ng-controller="loginCtrl" style="" title="Signup">
+    <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true">
+        <div class="bar bar-header bar-dark padding-bottom">
+            <h1 class="title">Create new user</h1>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col">A user is needed to use this application. As one goal is to store different information, although high security isnt needed, some privacy atleast is required. </div>
+        </div>
+        <form style="" ng-submit="signup()" class="list">
+            <ion-list style="">
+                <label style="" class="item item-input item-stacked-label">
+                    <span class="input-label">Name</span>
+                    <input placeholder="Optional" type="text">
+                </label>
+                <label style="" class="item item-input  item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input placeholder="Required" type="email" ng-model="user.email" required>
+                </label>
+                <label style="" class="item item-input  item-stacked-label">
+                    <span class="input-label">Password</span>
+                    <input placeholder="Required" type="text" ng-model="user.password" required>
+                </label>
+            </ion-list>
+            <div class="button-bar padding-top">
+                <button type="submit" class="button button-outline button-calm icon-left ion-ios-personadd-outline">Sign up</button>
+                <button type="button" class="button button-outline button-calm">Cancel</button>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col"><i class="icon x3-icon assertive ion-alert icon-positive"></i></div>
+            <div class="col col-90">
+                <p class="small-text">
+                    The personal information saved within this application, is not, by any means, shared with anyone what so ever. 
+                </p>
+            </div>
+        </div>
+        <div class="bar bar-footer bar-balanced">
+            <div class="title"></div>
+        </div>
+    </ion-content>
+</ion-view>

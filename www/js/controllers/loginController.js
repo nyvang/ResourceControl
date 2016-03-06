@@ -1,30 +1,69 @@
 ﻿/**
  * LOGIN CONTROLLER 
  */
-NyvangApp.controller('loginCtrl', function ($scope, $state) {
+NyvangApp.controller('loginCtrl', ['$scope', '$state', '$window',
+    function ($scope, $state, $win) {
+        const delay = 200;
 
-    var authProvider = "basic";
-    var opts     = {'remember': true}; 
+        var authProvider = "basic";
+        var opts = { 'remember': false };
 
-    var credentials = {
-        'email'     : 'nn@smartpage.dk',
-        'password'  : '1234'
-    }
+        var details = {};
 
-    $scope.authSuccess = function () {
-        c("User logged in!");
-        $state.go('main');
-    };
+        $scope.user = {};
+        $scope.user.name = "";
+        $scope.user.email = "";
+        $scope.user.password = "";
 
-    $scope.authFaliure = function (errors) {
-        c("User rejected:");
-        for (var err in errors) {
-            c(err);
+        $scope.gotoSignup = function () {
+            $state.go('signup');
         }
-    }
 
-    $scope.login = function (provider) {
-        Ionic.Auth.login(authProvider, opts, credentials)
-            .then(authSuccess, authFaliure);
-    };
-})
+        authSuccess = function () {
+            $state.go('menu.main');
+        };
+
+        authFailure = function (errors) {
+            for (var err in errors) {
+                c(err);
+            }
+        }
+
+        signupSuccess = function () {
+            $scope.result = "Success !";
+            $win.setTimeout(
+                function () {
+                    $state.go('login');
+                }, delay);
+        };
+
+        signupFailure = function (errors) {
+            for (var err in errors) {
+                c(err);
+            }
+        };
+
+        $scope.signup = function () {
+            details = {
+                'email': $scope.user.email,
+                'password': $scope.user.password
+            }
+            details.custom = {
+                'name': $scope.user.name
+            }
+            Ionic.Auth.signup(details)
+                .then(signupSuccess, signupFailure)
+        };
+
+        /*
+         * LOGIN 
+         */
+        $scope.login = function (provider) {
+            details = {
+                'email': $scope.user.email,
+                'password': $scope.user.password
+            }
+            Ionic.Auth.login(authProvider, opts, details)
+                .then(authSuccess, authFailure);
+        };
+    }]);

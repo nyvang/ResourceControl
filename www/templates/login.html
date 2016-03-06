@@ -1,0 +1,29 @@
+<ion-view ng-controller="loginCtrl" style="" title="Login">
+    <ion-content class="has-header" overflow-scroll="true" padding="true">
+        <h1 style="">Resource Control</h1>
+        <div style="">
+            <p class="pull-right">
+                - stay atop your consumables
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <img src="img/xBLCbZAaQ7aLDywjQAqD_stats.png" width="100%" height="auto">
+        </div>
+        <form class="list">
+            <ion-list>
+                <label class="item item-input">
+                    <span class="input-label">E-mail</span>
+                    <input type="email" ng-model="user.email" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label text-positive">Password</span>
+                    <input type="password" ng-model="user.password" required>
+                </label>
+            </ion-list>
+            <div class="button-bar padding-top">
+                <button type="submit" ng-click="login()" class="button button-balanced button-outline button-block icon-right ion-unlocked">Log in</button>
+                <button type="button" ng-click="gotoSignup()" class="button button-positive button-outline button-block icon-right ion-ios-personadd-outline">Signup</button>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

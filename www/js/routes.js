@@ -6,6 +6,18 @@ NyvangApp.config(function($stateProvider, $urlRouterProvider) {
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+    })
+ 
+    .state('signup', {
+        url: '/signup',
+        templateUrl: 'templates/signup.html',
+        controller: 'loginCtrl'
+    })
+ 
     .state('page2', {
       url: '/login',
       templateUrl: 'templates/page2.html'
@@ -67,6 +79,6 @@ NyvangApp.config(function($stateProvider, $urlRouterProvider) {
 
   // if none of the above states are matched, use this as the fallback
   
-  $urlRouterProvider.otherwise('/main-nav/current-month');
+  $urlRouterProvider.otherwise('/main');
   
 });
