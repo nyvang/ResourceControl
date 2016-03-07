@@ -20,6 +20,7 @@ NyvangApp.controller('page2Ctrl', function($scope, $state) {
         (function ($state) {
             var user = Ionic.User.current();
             if (!user.isAuthenticated()) {
+                c("logged out")
                 $state.go('login');
             }
         })();
@@ -136,7 +137,6 @@ NyvangApp.controller('page2Ctrl', function($scope, $state) {
         $scope.electrityForm.price = "";
     }
 
-
     /*
         MODAL CLOSE BUTTON
     */
@@ -175,9 +175,12 @@ NyvangApp.controller('page2Ctrl', function($scope, $state) {
 })
 
 .controller('mainCtrl', function ($scope, $state) {
-    var user = Ionic.User.current();
-    if (!user.isAuthenticated()) {
-        $state.go('login');
+
+    $scope.testform = {};
+    $scope.testform.doLogout = function () {
+        c("logout detected");
+        Ionic.Auth.logout();
     }
+
 });
  
