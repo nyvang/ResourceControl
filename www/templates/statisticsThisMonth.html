@@ -1,32 +1,43 @@
-<ion-view style="" title="Statistics - this month">
+<ion-view style="" title="Monthly">
     <ion-content ng-controller="statisticsThisMonthCtrl" class="has-header" overflow-scroll="true" padding="true">
-          
+
         <div class="row">
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
+            <div class="col">
+                <div id="chart_electicity" style="width: {{ chartWidth }}px; height: {{ chartHeight }}px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="item card">
+                <div class="item item-body">
+                    The chart visualizes the comparison of the resources spend over a timespan of 3 years.
+                    Click above to change the data of the chart, and click below to see the expences used on these resources - should you dear...
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="button button-positive button-block button-outline ">
+                <i class="icon ion-cash"></i>
+            </button>
         </div>
 
-        <div class="row">
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
+
+        <div class="bar bar-footer row">
+            <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+                <div class="tabs">
+                    <a class="tab-item active" href="#">
+                        <i class="icon ion-flash"></i>
+                        {{ electricButton }}
+                    </a>
+                    <a class="tab-item" href="#">
+                        <i class="icon ion-waterdrop"></i>
+                        Water
+                    </a>
+                    <a class="tab-item" href="#">
+                        <i class="icon ion-android-sunny"></i>
+                        Heat
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <div class="row">
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
-        </div>
-
-        <div class="row">
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
-          <div class="col"></div>
-        </div>        
-
     </ion-content>
 </ion-view>

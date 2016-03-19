@@ -64,7 +64,7 @@ NyvangApp.factory('dataService', [function(){
 	return deviceDiscovery;
 }])
 
-.factory('logFileService', [function(){
+.factory('googleChartLoader', [function(){
 
 }])
 
